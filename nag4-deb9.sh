@@ -351,13 +351,13 @@ case $MAINOP in
 
                echo '#############################################################################' >> /usr/local/nagios/etc/objects/localhost.cfg
                echo '# Define an optional hostgroup for Linux machines' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo 'define hostgroup {' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '    hostgroup_name          linux-servers           ; The name of the hostgroup' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '    alias                   Linux Servers           ; Long name of the group' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo "    members                 $LHNAME                 ; Comma separated list of hosts that belong to this group" >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '}' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '' >> /usr/local/nagios/etc/objects/localhost.cfg
+               echo '#' >> /usr/local/nagios/etc/objects/localhost.cfg
+               echo '#define hostgroup {' >> /usr/local/nagios/etc/objects/localhost.cfg
+               echo '#    hostgroup_name          linux-servers           ; The name of the hostgroup' >> /usr/local/nagios/etc/objects/localhost.cfg
+               echo '#    alias                   Linux Servers           ; Long name of the group' >> /usr/local/nagios/etc/objects/localhost.cfg
+               echo "#    members                 $LHNAME                 ; Comma separated list of hosts that belong to this group" >> /usr/local/nagios/etc/objects/localhost.cfg
+               echo '#}' >> /usr/local/nagios/etc/objects/localhost.cfg
+               echo '#' >> /usr/local/nagios/etc/objects/localhost.cfg
                echo
 
                echo '##############################################################################' >> /usr/local/nagios/etc/objects/localhost.cfg
