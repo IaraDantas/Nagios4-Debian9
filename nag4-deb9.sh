@@ -24,7 +24,11 @@ date >> /tmp/log.txt
 echo 'User root verification -> OK' >> /tmp/log.txt
 echo ''>> /tmp/log.txt
 else
+echo
 echo ' ERROR - Please run with ROOT USER!'
+echo
+echo '         Important: Command SUDO not accepted'
+echo
 echo
 sleep 2
 exit
@@ -139,7 +143,7 @@ case $MAINOP in
      apt-get update >> /tmp/log.txt
      echo
      echo
-     echo '...Installing prerequisites'
+     echo '...Installing prerequisites, that step may take a while'
      echo
      sleep 2
 
@@ -208,14 +212,14 @@ case $MAINOP in
      echo
 
      # Start Apache and Nagios services -- OK
-     echo '...Starting Apache and Nagios service'
+     echo '...Starting Apache and Nagios service, please wait'
      echo 'Starting Apache and Nagios service' >> /tmp/log.txt
      echo
      sleep 2
      a2enmod rewrite
      a2enmod cgi
      echo
-     echo '...Allowing tcp connections on port 80 using iptables'
+     echo '...Allowing tcp connections on port 80 using iptables, please wait'
      echo 'Allowing tcp connections on port 80 using iptables' >> /tmp/log.txt
      echo
      sleep 3
@@ -257,7 +261,7 @@ case $MAINOP in
      echo 'Command cd nagios-plugins-release-2.2.1/' >> /tmp/log.txt
      cd nagios-plugins-release-2.2.1/
      echo
-     echo '...Configuring plugins'
+     echo '...Configuring plugins, please wait'
      echo
      echo 'Configuring plugins' >> /tmp/log.txt
      echo 'Command ./tools/setup' >> /tmp/log.txt
@@ -272,17 +276,29 @@ case $MAINOP in
      echo '' >> /tmp/log.txt
      echo $USER >> /tmp/log.txt
      date >> /tmp/log.txt
+     # enable the new user in cgi file
+     sed -i -r "/nagiosadmin/s/nagiosadmin/nagiosadmin, $NAGNAME/g" /usr/local/nagios/etc/cgi.cfg
+
      echo 'End of Nagios core installation' >> /tmp/log.txt
      echo '' >> /tmp/log.txt
-
+     echo
+     echo '    End of Nagios installation'
+     echo
+     echo
+     echo
      echo 'Access Nagios interface using a web browser'
      echo 'Go to http://127.0.0.1/nagios'
      echo
-     echo '---------------------------'
+     echo
+     echo 'For insert new assets, please run it again'
+     echo 'and follow the instructions'
+     echo '------------------------------------------'
      echo
      echo 'Check the log file: /tmp/log.txt'
      echo 'For more detais, visit https://www.nagios.org/documentation/'
+     echo
      echo ;;
+
 2)
      echo $USER >> /tmp/log.txt
      date >> /tmp/log.txt
@@ -347,17 +363,6 @@ case $MAINOP in
                echo "    address                 $LHIP" >> /usr/local/nagios/etc/objects/localhost.cfg
                echo '}' >> /usr/local/nagios/etc/objects/localhost.cfg
                echo '' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo
-
-               echo '#############################################################################' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '# Define an optional hostgroup for Linux machines' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '#' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '#define hostgroup {' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '#    hostgroup_name          linux-servers           ; The name of the hostgroup' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '#    alias                   Linux Servers           ; Long name of the group' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo "#    members                 $LHNAME                 ; Comma separated list of hosts that belong to this group" >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '#}' >> /usr/local/nagios/etc/objects/localhost.cfg
-               echo '#' >> /usr/local/nagios/etc/objects/localhost.cfg
                echo
 
                echo '##############################################################################' >> /usr/local/nagios/etc/objects/localhost.cfg
