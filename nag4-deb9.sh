@@ -138,7 +138,7 @@ case $MAINOP in
      echo
      sleep 2
      echo 'Update repositóries' >> /tmp/log.txt
-
+     sed -i -r "/cdrom/s/^/#/g" /etc/apt/sources.list
      #update repositories - ISO requested -- OK
      apt-get update >> /tmp/log.txt
      echo
@@ -225,7 +225,7 @@ case $MAINOP in
      sleep 3
      echo '' >> /tmp/log.txt
      iptables -I INPUT -p tcp --destination-port 80 -j ACCEPT
-     apt-get install -y iptables-persistent >> /tmp/log.txt
+     apt-get install -y iptables-persistent
      #iptables-save > /etc/iptables/rules.v4
      echo
 
@@ -277,7 +277,7 @@ case $MAINOP in
      echo $USER >> /tmp/log.txt
      date >> /tmp/log.txt
      # enable the new user in cgi file
-     sed -i -r "/nagiosadmin/s/nagiosadmin/nagiosadmin, $NAGNAME/g" /usr/local/nagios/etc/cgi.cfg
+     sed -i -r "/nagiosadmin/s/nagiosadmin/nagiosadmin,$NAGNAME/g" /usr/local/nagios/etc/cgi.cfg
 
      echo 'End of Nagios core installation' >> /tmp/log.txt
      echo '' >> /tmp/log.txt
